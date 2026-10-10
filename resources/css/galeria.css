@@ -1,0 +1,242 @@
+/* ===== Reset y base ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: #f3f4f6;
+    color: #1f2937;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* ===== Navbar ===== */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #111827;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.logo {
+    color: #fff;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+/* Enlaces: ocultos en móvil, visibles desde tableta */
+.nav-links {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.nav-links a {
+    color: #fff;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: #d1d5db;
+}
+
+/* Botón hamburguesa (solo móvil) */
+.menu-btn {
+    display: block;
+    padding: 0.25rem;
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.menu-btn:focus-visible {
+    outline: 2px solid #fff;
+}
+
+.menu-btn svg {
+    width: 1.75rem;
+    height: 1.75rem;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.menu-btn .icon-close {
+    display: none;
+}
+
+.menu-btn[aria-expanded="true"] .icon-open {
+    display: none;
+}
+
+.menu-btn[aria-expanded="true"] .icon-close {
+    display: block;
+}
+
+/* Menú desplegable móvil */
+.mobile-menu {
+    display: none;
+    border-top: 1px solid #1f2937;
+    padding: 0.75rem 1rem;
+}
+
+.mobile-menu.open {
+    display: block;
+}
+
+.mobile-menu a {
+    display: block;
+    padding: 0.6rem 0.75rem;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.mobile-menu a:hover {
+    background: #1f2937;
+}
+
+/* ===== Contenido ===== */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.titulo {
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* Móvil: 1 columna */
+.galeria {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+/* ===== Tarjetas ===== */
+.card {
+    overflow: hidden;
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-body h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.card-body p {
+    color: #4b5563;
+}
+
+/* ===== Tableta (768px en adelante): menú completo y 2 columnas ===== */
+@media (min-width: 768px) {
+    .menu-btn,
+    .mobile-menu,
+    .mobile-menu.open {
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+    }
+
+    .navbar {
+        padding: 1rem 1.5rem;
+    }
+
+    .container {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .titulo {
+        font-size: 2.25rem;
+    }
+
+    .galeria {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+/* ===== Escritorio (1024px en adelante): más espacio en el menú ===== */
+@media (min-width: 1024px) {
+    .navbar {
+        padding: 1rem 2rem;
+    }
+
+    .container {
+        padding: 2.5rem 2rem;
+    }
+
+    .nav-links {
+        gap: 2rem;
+    }
+}
+
+/* ===== Escritorio grande (1280px en adelante): 4 columnas ===== */
+@media (min-width: 1280px) {
+    .galeria {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
