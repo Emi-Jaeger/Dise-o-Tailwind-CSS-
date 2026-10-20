@@ -1,36 +1,69 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categorías</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 p-8">
-    <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-xl font-bold mb-4">Agregar Categoría</h1>
+<body>
+    <x-navbar/>
 
-        <!-- Formulario -->
-        <form action="{{ route('categoria.create') }}" method="POST" class="flex flex-col gap-4">
-            @csrf
-            <div>
-                <label for="categoria" class="block text-sm font-medium text-gray-700 mb-1">Nombre de Categoría</label>
-                <input type="text" name="categoria" id="categoria" required class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <h1 class="text-center my-3">Categorías</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+
+                @if($errors->any())
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $e)
+                            <div>{{ $e }}</div>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="mb-3">
+                    <x-create-categoria/>
+                </div>
+
+                <table class="table table-bordered align-middle">
+                    <thead class="table-info">
+                        <tr>
+                            <th>id</th>
+                            <th>categorías</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($categoria as $i)
+                        <tr>
+                            <td>{{ $i->id }}</td>
+                            <td>{{ $i->categoria }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <form action="{{ route('categoria.update', $i->id) }}" method="POST" class="d-flex gap-2 flex-grow-1">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="text" name="categoria" value="{{ $i->categoria }}" class="form-control form-control-sm" required>
+                                        <button type="submit" class="btn btn-warning btn-sm">Actualizar</button>
+                                    </form>
+                                    <form action="{{ route('categoria.delete', $i->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
             </div>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Guardar
-            </button>
-        </form>
-
-        <!-- Lista de Categorías registradas -->
-        <div class="mt-6">
-            <h2 class="text-lg font-semibold mb-2">Categorías Registradas:</h2>
-            <ul class="list-disc pl-5 space-y-1">
-                @foreach($categoria as $cat)
-                    <li class="text-gray-800">{{ $cat->categoria }}</li>
-                @endforeach
-            </ul>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

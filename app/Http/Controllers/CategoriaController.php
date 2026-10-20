@@ -9,7 +9,6 @@ class CategoriaController extends Controller
 {
     public function getCategorias()
     {
-        // select * from categoria
         $categoria = Categoria::all();
         return view('categoria', compact('categoria'));
     }
@@ -17,33 +16,33 @@ class CategoriaController extends Controller
     public function createCategoria(Request $request)
     {
         $request->validate([
-            'categoria' => 'required'
+            'categoria' => 'required|string|max:255',
         ]);
 
         Categoria::create([
-            'categoria' => $request->categoria
+            'categoria' => $request->categoria,
         ]);
 
-        return redirect()->back();
+        return redirect()->route('getCategoria');
     }
 
-    public function updateCategoria($id, Request $request)
+    public function updateCategoria(Request $request, $id)
     {
-        // select * from categoria where id = 1
-        $categoria = Categoria::find($id);
-        $categoria->update([
-            "categoria" => $request->categoria
+        $request->validate([
+            'categoria' => 'required|string|max:255',
         ]);
-        $categoria->save();
-        return redirect("/categorias")->with(["mensaje" => "categoria Actualizada"]);
+
+        Categoria::findOrFail($id)->update([
+            'categoria' => $request->categoria,
+        ]);
+
+        return redirect()->route('getCategoria');
     }
 
     public function deleteCategoria($id)
     {
-        $categoria = Categoria::find($id);
-        $categoria->delete();
-        $categoria->save();
-        return redirect("/categorias")->with(["mensaje" => "categoria Eliminada"]);
+        Categoria::findOrFail($id)->delete();
+
+        return redirect()->route('getCategoria');
     }
 }
-

@@ -17,6 +17,8 @@
         "@laravel/multiplex": "^0.4.1"
     },
     "dependencies": {
-        "@tailwindcss/cli": "^4.3.3"
+        "@popperjs/core": "^2.11.8",
+        "@tailwindcss/cli": "^4.3.0",
+        "bootstrap": "^6.0.0-alpha.1"
     }
 }
